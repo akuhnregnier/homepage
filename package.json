@@ -11,6 +11,9 @@
   },
   "packageManager": "pnpm@8.6.5",
   "dependencies": {
+    "turbo": "^1.10.7"
+  },
+  "devDependencies": {
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
@@ -21,10 +24,6 @@
     "husky": "^8.0.3",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "turbo": "^1.10.7",
     "typescript": "^5.1.6"
-  },
-  "devDependencies": {
-    "husky": "^8.0.0"
   }
 }
