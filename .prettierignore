@@ -1,0 +1,15 @@
+node_modules/
+build/
+cjs/
+coverage/
+dist/
+dts/
+esm/
+pkg/
+lib/
+mjs/
+umd/
+CHANGELOG.md
+*.d.ts
+.next/
+pnpm-lock.yaml
