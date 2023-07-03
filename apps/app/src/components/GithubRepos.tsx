@@ -1,6 +1,8 @@
 import React from "react";
-import { type IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { GoCalendar, GoEye, GoLink, GoStarFill } from "react-icons/go";
+import type { Root } from "remark-gemoji";
+import type { Processor } from "unified";
 
 const IconRow = ({ Icon, Item }: { Icon: IconType; Item: React.ReactNode }) => (
   <div className="m-2 flex">
@@ -22,6 +24,14 @@ interface GithubRepoProps {
   };
 }
 
+const replaceGithubEmojis = async (processor: Processor<Root, Root, Root, String>, text: string) => {
+  const matches = Array.from(text.matchAll(/:([a-z0-9_]+):/g));
+  for (const match of matches) {
+    text = text.replace(match[0], (await processor.process(match[0])).toString());
+  }
+  return text;
+};
+
 const GithubRepo = async (repo: GithubRepoProps) => {
   const remarkGemoji = (await import("remark-gemoji")).default;
   const remarkParse = (await import("remark-parse")).default;
@@ -34,8 +44,8 @@ const GithubRepo = async (repo: GithubRepoProps) => {
       key={repo.id}
       className="m-7 max-w-xl rounded-lg bg-gray-100 p-5 hover:bg-gray-50 dark:bg-gray-900 hover:dark:bg-gray-800"
     >
-      <h1 className="mb-3 text-3xl text-gray-900 dark:text-white">{(await processor.process(repo.name)).toString()}</h1>
-      <h2 className="text-lg">{(await processor.process(repo.description)).toString()}</h2>
+      <h1 className="mb-3 text-3xl text-gray-900 dark:text-white">{await replaceGithubEmojis(processor, repo.name)}</h1>
+      <h2 className="text-lg">{await replaceGithubEmojis(processor, repo.description)}</h2>
       <div className="flex max-w-full flex-wrap items-end justify-self-end">
         <IconRow
           Icon={GoLink}
